@@ -1,0 +1,9 @@
+- virtual_machine: VM01
+  name: eth0
+  enabled: true
+- virtual_machine: VM02
+  name: eth0
+  enabled: true
+- virtual_machine: VM03
+  name: eth0
+  enabled: true

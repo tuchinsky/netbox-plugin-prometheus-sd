@@ -1,0 +1,72 @@
+services:
+  netbox:
+    image: netboxcommunity/netbox:${VERSION-v4.5-4.0.2}
+    user: "root:root" # only for pip
+    environment:
+      CORS_ORIGIN_ALLOW_ALL: True
+      DB_HOST: postgres
+      DB_NAME: netbox
+      DB_PASSWORD: netbox
+      DB_USER: netbox
+      DEBUG: 1
+      DB_WAIT_DEBUG: 1
+      HOUSEKEEPING_INTERVAL: 86400
+      MEDIA_ROOT: /opt/netbox/netbox/media
+      METRICS_ENABLED: true
+      WEBHOOKS_ENABLED: true
+      REDIS_CACHE_DATABASE: 1
+      REDIS_CACHE_HOST: redis
+      REDIS_CACHE_SSL: false
+      REDIS_DATABASE: 0
+      REDIS_HOST: redis
+      REDIS_SSL: false
+      RELEASE_CHECK_URL: https://api.github.com/repos/netbox-community/netbox/releases
+      SECRET_KEY: 'r(m)9nLGnz$(_q3N4z1k(EFsMCjjjzx08x9VhNVcfd%6RF#r!6DE@+V5Zk2X'
+      SKIP_STARTUP_SCRIPTS: false
+      SKIP_SUPERUSER: false
+      SUPERUSER_API_TOKEN: 0123456789abcdef0123456789abcdef01234567
+      SUPERUSER_EMAIL: admin@example.com
+      SUPERUSER_NAME: admin
+      SUPERUSER_PASSWORD: admin
+    command: >
+      sh -c "/usr/local/bin/uv pip install netbox-initializers==4.5.1 &&
+             uv pip install -e /opt/netbox/netbox/netbox_prometheus_sd &&
+             /opt/netbox/docker-entrypoint.sh /opt/netbox/launch-netbox.sh"
+    volumes:
+      - ./example/configuration/plugins.py:/etc/netbox/config/plugins.py:z,ro
+      - ./example/initializers:/etc/netbox/initializer-data:z,ro
+      - ./netbox_prometheus_sd:/opt/netbox/netbox/netbox_prometheus_sd
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: curl -f http://localhost:8080/login/ || exit 1
+      start_period: 20s
+      timeout: 5s
+      interval: 10s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: netbox
+      POSTGRES_PASSWORD: netbox
+      POSTGRES_USER: netbox
+    volumes:
+      - netbox-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -q -t 2 -d $$POSTGRES_DB -U $$POSTGRES_USER
+      start_period: 20s
+      timeout: 30s
+      interval: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+
+volumes:
+  netbox-postgres-data:

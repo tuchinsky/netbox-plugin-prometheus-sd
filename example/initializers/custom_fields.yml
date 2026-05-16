@@ -1,0 +1,8 @@
+service:
+  type: string
+  weight: 100
+  on_objects: ["dcim.models.Device", "virtualization.models.VirtualMachine"]
+role:
+  type: string
+  weight: 101
+  on_objects: ["dcim.models.Device", "virtualization.models.VirtualMachine"]

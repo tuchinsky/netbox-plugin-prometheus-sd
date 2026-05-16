@@ -1,0 +1,6 @@
+[project]
+name = "netbox_prometheus_sd"
+version = "0.1.0"
+description = "A Netbox plugin to export targets for Prometheus"
+authors = [{ name = "Artem Tuchinsky", email = "tuchinsky@gmail.com" }]
+requires-python = ">=3.8"

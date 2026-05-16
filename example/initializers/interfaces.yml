@@ -1,0 +1,12 @@
+- device: Server01
+  enabled: true
+  type: 1000base-t
+  name: eth0
+- device: Server02
+  enabled: true
+  type: 1000base-t
+  name: eth0
+- device: Server03
+  enabled: true
+  type: 1000base-t
+  name: eth0

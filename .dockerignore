@@ -1,0 +1,8 @@
+# VCS
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+.dockerignore
+docker-compose.yml

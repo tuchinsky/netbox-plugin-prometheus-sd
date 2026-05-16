@@ -1,0 +1,27 @@
+- name: Server01
+  role: Server
+  device_type: Default
+  site: Default
+  primary_ip4: 192.168.1.1/24
+  status: active
+  custom_field_data:
+    service: proxmox
+    role: pve
+- name: Server02
+  role: Server
+  device_type: Default
+  site: Default
+  primary_ip4: 192.168.1.2/24
+  status: staged
+  custom_field_data:
+    service: proxmox
+    role: pve
+- name: Server03
+  role: Server
+  device_type: Default
+  site: Default
+  primary_ip4: 192.168.1.3/24
+  status: offline
+  custom_field_data:
+    service: proxmox
+    role: pve
