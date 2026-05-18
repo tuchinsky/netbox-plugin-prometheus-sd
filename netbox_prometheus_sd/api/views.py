@@ -1,11 +1,17 @@
+import os
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from dcim.models import Device
 from virtualization.models import VirtualMachine
 from extras.models import ConfigContext
 
-# 'ip' or 'dns'
-TARGET_SOURCE = 'ip'
+TARGET_SOURCE = os.environ.get('PROMETHEUS_SD_TARGET_SOURCE', 'dns')
+if TARGET_SOURCE not in ('ip', 'dns'):
+    raise ValueError(
+        f"Incorrect value PROMETHEUS_SD_TARGET_SOURCE: '{TARGET_SOURCE}'. "
+        "Acceptable values: 'ip', 'dns'."
+    )
 
 class PrometheusTargetsView(APIView):
     permission_classes = []
@@ -65,11 +71,6 @@ class PrometheusTargetsView(APIView):
                 address = name
             elif TARGET_SOURCE == 'ip':
                 address = str(ip.address.ip)
-            else:
-                raise ValueError(
-                    f"Incorrect value TARGET_SOURCE: '{TARGET_SOURCE}'. "
-                    "Acceptable values: 'ip', 'dns'."
-                )
 
             # default labels
             labels = {
