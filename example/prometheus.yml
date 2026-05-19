@@ -10,7 +10,7 @@ scrape_configs:
 
   - job_name: "netbox-sd"
     http_sd_configs:
-      - url: http://netbox:8080/api/plugins/prometheus-sd/targets/
+      - url: http://netbox:8080/api/plugins/prometheus-http-sd/targets/
         refresh_interval: 15s
     relabel_configs:
       - source_labels: [__meta_netbox_name]

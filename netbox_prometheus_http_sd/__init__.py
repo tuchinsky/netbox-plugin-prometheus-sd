@@ -6,10 +6,10 @@ except ImportError:
     __version__ = "0.0.0.dev0"
 
 class NetBoxPrometheusSDConfig(PluginConfig):
-    name = 'netbox_prometheus_sd'
-    verbose_name = 'NetBox Prometheus SD'
+    name = 'netbox_prometheus_http_sd'
+    verbose_name = 'NetBox Prometheus HTTP SD'
     description = 'A Netbox plugin to export targets for Prometheus HTTP service discovery'
     version = __version__
-    base_url = 'prometheus-sd'
+    base_url = 'prometheus-http-sd'
 
 config = NetBoxPrometheusSDConfig

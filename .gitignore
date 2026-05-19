@@ -16,4 +16,4 @@ build/
 *~
 
 # setuptools
-netbox_prometheus_sd/_version.py
+netbox_prometheus_http_sd/_version.py

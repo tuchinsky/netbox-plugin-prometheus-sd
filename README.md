@@ -62,7 +62,7 @@ If role is not found, the `default` entry is used
 
 The plugin exposes a single API endpoint (no web UI):
 ```
-GET /api/plugins/prometheus-sd/targets/
+GET /api/plugins/prometheus-http-sd/targets/
 ```
 
 Device or Virtual Machine is included only if all of the following are true:

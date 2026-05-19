@@ -29,12 +29,12 @@ services:
       SUPERUSER_PASSWORD: admin
     command: >
       sh -c "/usr/local/bin/uv pip install netbox-initializers==4.5.1 &&
-             /usr/local/bin/uv pip install -e /opt/netbox/netbox/netbox_prometheus_sd &&
+             /usr/local/bin/uv pip install -e /opt/netbox/netbox/netbox_prometheus_http_sd &&
              /opt/netbox/docker-entrypoint.sh /opt/netbox/launch-netbox.sh"
     volumes:
       - ./example/configuration/plugins.py:/etc/netbox/config/plugins.py:z,ro
       - ./example/initializers:/etc/netbox/initializer-data:z,ro
-      - ./netbox_prometheus_sd:/opt/netbox/netbox/netbox_prometheus_sd
+      - ./netbox_prometheus_http_sd:/opt/netbox/netbox/netbox_prometheus_http_sd
     ports:
       - "8080:8080"
     healthcheck:
